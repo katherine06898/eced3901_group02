@@ -157,13 +157,10 @@ class SquareMoveOdom(SquareMove):
 
         (roll, pitch, yaw) = euler_from_quaternion([orientation.x, orientation.y, orientation.z, orientation.w])
         # print roll, pitch, yaw
-	# Normalizing yaw values to [0, 2pi)
-        yaw = (2*math.pi + yaw) * (yaw < 0) + yaw*(yaw > 0)
-	print ("\n yaw value is : ")
-	print yaw
+
         return yaw
         
-    def move_of(self, d, speed=0.2):
+    def move_of(self, d, speed=0.05):
 
         x_init = self.odom_pose.position.x
         y_init = self.odom_pose.position.y
@@ -184,22 +181,20 @@ class SquareMoveOdom(SquareMove):
 
         sys.stdout.write("\n")
 
-    def turn_of(self, a, ang_speed=0.4):
+    def turn_of(self, a, ang_speed=0.2):
 
-        # Normalize yaw value from [0, 2pi)
-	a_init = 0.0
-
+	a_init = self.get_z_rotation(self.odom_pose.orientation)
+	 
+	correction = 0
         # Set the angular velocity forward until angle is reached
-	while (self.get_z_rotation(self.odom_pose.orientation)-a_init) < a and not ros.is_shutdown():
+	while (self.get_z_rotation(self.odom_pose.orientation) + correction - a_init) < a and not ros.is_shutdown():
 
             sys.stdout.write("\r [TURN] The robot has turned of {:.2f}".format(self.get_z_rotation(self.odom_pose.orientation) - \
-                a_init) + "rad over {:.2f}".format(a) + "rad")
+                a_init + correction) + "rad over {:.2f}".format(a) + "rad")
             sys.stdout.flush()
-	    
+
 	    print("\n yaw - a_init: ")
             print (self.get_z_rotation(self.odom_pose.orientation) - a_init)
-#	    print("\n a_init value is: ")
-#           print a_init
             print("\n")
 
             msg = Twist()
@@ -207,7 +202,12 @@ class SquareMoveOdom(SquareMove):
             msg.linear.x = 0
             self.vel_ros_pub(msg)
             time.sleep(self.pub_rate)
-
+	    
+	 # Normalization of angle
+            if a_init + a > math.pi and self.get_z_rotation(self.odom_pose.orientation) < 0:
+                correction = 2*math.pi
+            else:
+                correction = 0
         sys.stdout.write("\n")
     def move(self):
 
@@ -219,10 +219,11 @@ class SquareMoveOdom(SquareMove):
         self.move_of(0.5)
         self.turn_of(math.pi/2) # Turn 90 degrees 1.57 rad
         self.move_of(0.5)
-        self.turn_of(math.pi) # Turn 90 degrees base on the position 3.14 rad
+        self.turn_of(math.pi/2) # Turn 90 degrees base on the position 3.14 rad
         self.move_of(0.5)
-        self.turn_of(3*math.pi/2) # Turn final 90 degrees, 4.71 rad
+        self.turn_of(math.pi/2) # Turn final 90 degrees, 4.71 rad
         self.move_of(0.5)
+	self.turn_of(math.pi/2) #reset position
         self.stop_robot()
 
 
