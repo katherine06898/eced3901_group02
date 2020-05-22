@@ -8,15 +8,15 @@ from nav_msgs.msg import Odometry
 from tf.transformations import euler_from_quaternion, quaternion_from_euler
 
 
-__author__ = "Gabriel Urbain" 
-__copyright__ = "Copyright 2018, IDLab, UGent"
+__author__ = "eced3901_group2" 
+__copyright__ = "Dalhousie Unversity Electrical and Computer Engineering Department"
 
-__license__ = "MIT" 
-__version__ = "1.0" 
-__maintainer__ = "Gabriel Urbain"
-__email__ = "gabriel.urbain@ugent.be" 
+__license__ = "N/A" 
+__version__ = "2.0" 
+__maintainer__ = "eced3901_group2"
+__email__ = "katherinelin@dal.ca" 
 __status__ = "Education" 
-__date__ = "October 15th, 2018"
+__date__ = "May 22, 2020"
 
 
 class SquareMove(object):
@@ -52,6 +52,7 @@ class SquareMove(object):
         # Create the Subscribers and Publishers
         self.odometry_sub = ros.Subscriber(self.odom_sub_name, Odometry, callback=self.__odom_ros_sub, queue_size=self.queue_size)
         self.vel_pub = ros.Publisher(self.vel_pub_name, Twist, queue_size=self.queue_size)
+
     def stop_robot(self):
 
         # Get the initial time
@@ -137,7 +138,7 @@ class SquareMoveVel(SquareMove):
 
 class SquareMoveOdom(SquareMove):
     """
-    This class implements a semi closed-loop square trajectory based on relative position control,
+    This class implements a closed-loop square trajectory based on relative position control,
     where only odometry is used. HOWTO:
      - Start the sensors on the turtlebot:
             $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch 
@@ -155,10 +156,14 @@ class SquareMoveOdom(SquareMove):
     def get_z_rotation(self, orientation):
 
         (roll, pitch, yaw) = euler_from_quaternion([orientation.x, orientation.y, orientation.z, orientation.w])
-        print roll, pitch, yaw
+        # print roll, pitch, yaw
+	# Normalizing yaw values to [0, 2pi)
+        yaw = (2*math.pi + yaw) * (yaw < 0) + yaw*(yaw > 0)
+	print ("\n yaw value is : ")
+	print yaw
         return yaw
         
-    def move_of(self, d, speed=0.1):
+    def move_of(self, d, speed=0.2):
 
         x_init = self.odom_pose.position.x
         y_init = self.odom_pose.position.y
@@ -179,19 +184,23 @@ class SquareMoveOdom(SquareMove):
 
         sys.stdout.write("\n")
 
-    def turn_of(self, a, ang_speed=0.75):
+    def turn_of(self, a, ang_speed=0.4):
 
-        # Convert the orientation quaternion message to Euler angles
-        a_init = self.get_z_rotation(self.odom_pose.orientation)
-        print a_init
+        # Normalize yaw value from [0, 2pi)
+	a_init = 0.0
 
         # Set the angular velocity forward until angle is reached
-        while (self.get_z_rotation(self.odom_pose.orientation) - a_init) < a and not ros.is_shutdown():
+	while (self.get_z_rotation(self.odom_pose.orientation)-a_init) < a and not ros.is_shutdown():
 
             sys.stdout.write("\r [TURN] The robot has turned of {:.2f}".format(self.get_z_rotation(self.odom_pose.orientation) - \
-                 a_init) + "rad over {:.2f}".format(a) + "rad")
+                a_init) + "rad over {:.2f}".format(a) + "rad")
             sys.stdout.flush()
+	    
+	    print("\n yaw - a_init: ")
             print (self.get_z_rotation(self.odom_pose.orientation) - a_init)
+#	    print("\n a_init value is: ")
+#           print a_init
+            print("\n")
 
             msg = Twist()
             msg.angular.z = ang_speed
@@ -200,7 +209,6 @@ class SquareMoveOdom(SquareMove):
             time.sleep(self.pub_rate)
 
         sys.stdout.write("\n")
-
     def move(self):
 
         # Wait that our python program has received its first messages
@@ -209,11 +217,11 @@ class SquareMoveOdom(SquareMove):
 
         # Implement main instructions
         self.move_of(0.5)
-        self.turn_of(math.pi/4)
+        self.turn_of(math.pi/2) # Turn 90 degrees 1.57 rad
         self.move_of(0.5)
-        self.turn_of(math.pi/4)
+        self.turn_of(math.pi) # Turn 90 degrees base on the position 3.14 rad
         self.move_of(0.5)
-        self.turn_of(math.pi/4)
+        self.turn_of(3*math.pi/2) # Turn final 90 degrees, 4.71 rad
         self.move_of(0.5)
         self.stop_robot()
 
@@ -240,3 +248,8 @@ if __name__ == '__main__':
     # Listen and Publish to ROS + execute moving instruction
     r.start_ros()
     r.move()
+
+
+
+
+
