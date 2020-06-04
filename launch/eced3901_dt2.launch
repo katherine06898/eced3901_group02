@@ -4,6 +4,8 @@
   <arg name="slam_methods" default="gmapping" doc="slam type [gmapping, cartographer, hector, karto, frontier_exploration]"/>
   <arg name="configuration_basename" default="turtlebot3_lds_2d.lua"/>
   <arg name="open_rviz" default="true"/>
+  <arg name="mode" defaul="odom"/>
+  <arg name="node_start_delay" default="1.0" />
 
   <!-- TurtleBot3 -->
   <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch">
@@ -21,4 +23,7 @@
     <node pkg="rviz" type="rviz" name="rviz" required="true"
           args="-d $(find turtlebot3_slam)/rviz/turtlebot3_$(arg slam_methods).rviz"/>
   </group>
+
+  <!-- Move in Square -->
+  <node name="square" pkg="src" type="eced3901_dt2.py" args="$(arg mode)"/>
 </launch>
