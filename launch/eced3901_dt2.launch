@@ -25,5 +25,5 @@
   </group>
 
   <!-- Move in Square -->
-  <node name="square" pkg="src" type="eced3901_dt2.py" args="$(arg mode)"/>
+  <node name="square" pkg="eced3901_group02" type="eced3901_dt2.py" args="$(arg mode)"/>
 </launch>

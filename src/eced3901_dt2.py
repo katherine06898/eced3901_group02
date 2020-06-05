@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import math
 import rospy as ros
 import sys
@@ -8,15 +10,15 @@ from nav_msgs.msg import Odometry
 from tf.transformations import euler_from_quaternion, quaternion_from_euler
 
 
-__author__ = "eced3901_group2" 
-__copyright__ = "Dalhousie Unversity Electrical and Computer Engineering Department"
+__author__ = "Gabriel Urbain" 
+__copyright__ = "Copyright 2018, IDLab, UGent"
 
-__license__ = "N/A" 
-__version__ = "2.0" 
-__maintainer__ = "eced3901_group2"
-__email__ = "katherinelin@dal.ca" 
+__license__ = "MIT" 
+__version__ = "1.0" 
+__maintainer__ = "Gabriel Urbain"
+__email__ = "gabriel.urbain@ugent.be" 
 __status__ = "Education" 
-__date__ = "May 22, 2020"
+__date__ = "October 15th, 2018"
 
 
 class SquareMove(object):
@@ -81,8 +83,6 @@ class SquareMove(object):
         self.vel_pub.publish(msg)
 
 
-
-
 class SquareMoveVel(SquareMove):
     """
     This class implements a open-loop square trajectory based on velocity control. HOWTO:
@@ -138,7 +138,7 @@ class SquareMoveVel(SquareMove):
 
 class SquareMoveOdom(SquareMove):
     """
-    This class implements a closed-loop square trajectory based on relative position control,
+    This class implements a semi closed-loop square trajectory based on relative position control,
     where only odometry is used. HOWTO:
      - Start the sensors on the turtlebot:
             $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch 
@@ -156,11 +156,19 @@ class SquareMoveOdom(SquareMove):
     def get_z_rotation(self, orientation):
 
         (roll, pitch, yaw) = euler_from_quaternion([orientation.x, orientation.y, orientation.z, orientation.w])
-        # print roll, pitch, yaw
-
+        print roll, pitch, yaw
         return yaw
-        
-    def move_of(self, d, speed=0.05):
+     
+    #students need to create check on angle wrapping: ==============================
+    def wrap_angle(self, angle_in):
+    
+        angle_in = math.fmod(angle_in + math.pi,2*math.pi)
+        if (angle_in < 0):
+           angle_in += 2*math.pi
+        return angle_in - math.pi
+    
+    #students need to limit/adj linear velocity =============================
+    def move_of(self, d, speed=0.1):
 
         x_init = self.odom_pose.position.x
         y_init = self.odom_pose.position.y
@@ -181,50 +189,53 @@ class SquareMoveOdom(SquareMove):
 
         sys.stdout.write("\n")
 
+    
+    #students need to limit/adj angular velocity =============================
     def turn_of(self, a, ang_speed=0.2):
 
-	a_init = self.get_z_rotation(self.odom_pose.orientation)
-	 
-	correction = 0
+        # Convert the orientation quaternion message to Euler angles
+        a_init = self.get_z_rotation(self.odom_pose.orientation)
+        print a_init
+
+    #students need to fix the angle handling ========================
+    
         # Set the angular velocity forward until angle is reached
-	while (self.get_z_rotation(self.odom_pose.orientation) + correction - a_init) < a and not ros.is_shutdown():
+        while ( abs(self.wrap_angle(self.get_z_rotation(self.odom_pose.orientation) - a_init)) ) < a and not ros.is_shutdown():
 
-            sys.stdout.write("\r [TURN] The robot has turned of {:.2f}".format(self.get_z_rotation(self.odom_pose.orientation) - \
-                a_init + correction) + "rad over {:.2f}".format(a) + "rad")
-            sys.stdout.flush()
-
-	    print("\n yaw - a_init: ")
-            print (self.get_z_rotation(self.odom_pose.orientation) - a_init)
-            print("\n")
+            # sys.stdout.write("\r [TURN] The robot has turned of {:.2f}".format(self.get_z_rotation(self.odom_pose.orientation) - \
+            #     a_init) + "rad over {:.2f}".format(a) + "rad")
+            # sys.stdout.flush()
+            # print (self.get_z_rotation(self.odom_pose.orientation) - a_init)
 
             msg = Twist()
             msg.angular.z = ang_speed
             msg.linear.x = 0
             self.vel_ros_pub(msg)
             time.sleep(self.pub_rate)
-	    
-	 # Normalization of angle
-            if a_init + a > math.pi and self.get_z_rotation(self.odom_pose.orientation) < 0:
-                correction = 2*math.pi
-            else:
-                correction = 0
+
         sys.stdout.write("\n")
+
     def move(self):
 
         # Wait that our python program has received its first messages
         while self.odom_pose is None and not ros.is_shutdown():
             time.sleep(0.1)
+   
+
+    #students need to fix these angles ===============================
 
         # Implement main instructions
-        self.move_of(0.5)
-        self.turn_of(math.pi/2) # Turn 90 degrees 1.57 rad
-        self.move_of(0.5)
-        self.turn_of(math.pi/2) # Turn 90 degrees base on the position 3.14 rad
-        self.move_of(0.5)
-        self.turn_of(math.pi/2) # Turn final 90 degrees, 4.71 rad
-        self.move_of(0.5)
-	self.turn_of(math.pi/2) #reset position
+	# Changed parameters of move_of() to fulfill the requirement of DT2
+        self.move_of(1.1) 
+        self.turn_of(math.pi/2)
+        self.move_of(1.1)
+        self.turn_of(math.pi/2)
+        self.move_of(1.1)
+        self.turn_of(math.pi/2)
+        self.move_of(1.1)
+        self.turn_of(math.pi/2)
         self.stop_robot()
+
 
 
 
@@ -249,8 +260,3 @@ if __name__ == '__main__':
     # Listen and Publish to ROS + execute moving instruction
     r.start_ros()
     r.move()
-
-
-
-
-
