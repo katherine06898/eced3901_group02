@@ -5,6 +5,7 @@
   <arg name="configuration_basename" default="turtlebot3_lds_2d.lua"/>
   <arg name="open_rviz" default="true"/>
   <arg name="mode" default="odom"/>
+  <arg name="dt2map" default="/eced3901_group02"/>
   <arg name="node_start_delay" default="1.0" />
 
   <!-- TurtleBot3 -->
@@ -26,4 +27,7 @@
 
   <!-- Move in Square -->
   <node name="square" pkg="eced3901_group02" type="eced3901_dt2.py" args="$(arg mode)"/>
+
+  <!-- Saving Map after Mapping the Location -->
+  <node name="map_saver" pkg="map_server" type="map_saver" args="-f $(find eced3901_group02)/map_saver" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@' "/>
 </launch>
