@@ -6,7 +6,7 @@
   <arg name="open_rviz" default="true"/>
   <arg name="mode" default="odom"/>
   <arg name="dt2map" default="/eced3901_group02"/>
-  <arg name="node_start_delay" default="1.0" />
+  <arg name="node_start_delay" default="120.0" />
 
   <!-- TurtleBot3 -->
   <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch">
