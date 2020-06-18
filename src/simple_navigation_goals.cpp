@@ -16,10 +16,10 @@ int main(int argc, char** argv){
   }
 
   move_base_msgs::MoveBaseGoal goal;
-  move_base_msgs::MoveBaseGoal goal2;
+  //move_base_msgs::MoveBaseGoal goal2;
 
   //we'll send a goal to the robot to move 1 meter forward
-  goal.target_pose.header.frame_id = "base_link";
+  goal.target_pose.header.frame_id = "map";
   goal.target_pose.header.stamp = ros::Time::now();
 
   goal.target_pose.pose.position.x = 1.1;
@@ -35,13 +35,13 @@ int main(int argc, char** argv){
   else
     ROS_INFO("The base failed to move forward 1.1 meter for some reason");
 
-  goal2.target_pose.pose.position.y = 1.1;
-  goal2.target_pose.pose.orientation.w = 1.0;
+  //goal2.target_pose.pose.position.y = 1.1;
+  //goal2.target_pose.pose.orientation.w = 1.0;
 
-  ROS_INFO("Sending goal");
-  ac.sendGoal(goal2);
+  //ROS_INFO("Sending goal");
+  //ac.sendGoal(goal2);
 
-  ac.waitForResult();    //wait for the second goal to finish
+  //ac.waitForResult();    //wait for the second goal to finish
 
   return 0;
 }
