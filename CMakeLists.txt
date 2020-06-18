@@ -206,5 +206,7 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+## Add executable for navigation
 add_executable(eced3901_group02 src/simple_navigation_goals.cpp)
 target_link_libraries(eced3901_group02 ${catkin_LIBRARIES})
