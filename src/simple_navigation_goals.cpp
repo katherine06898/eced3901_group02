@@ -36,7 +36,7 @@ int main(int argc, char** argv){
   goal2.target_pose.header.stamp = ros::Time::now();
 
   goal2.target_pose.pose.position.y = 1.1;
-  goal2.target_pose.pose.orientation.w = -0.5;
+  goal2.target_pose.pose.orientation.w = 0.5;
 
   ROS_INFO("Sending goal2");
   ac.sendGoal(goal2);
@@ -58,7 +58,7 @@ int main(int argc, char** argv){
   goal4.target_pose.header.stamp = ros::Time::now();
 
   goal4.target_pose.pose.position.y = -1.1;
-  goal4.target_pose.pose.orientation.w = -0.5;
+  goal4.target_pose.pose.orientation.w = 0.5;
 
   ROS_INFO("Sending goal4");
   ac.sendGoal(goal4);
