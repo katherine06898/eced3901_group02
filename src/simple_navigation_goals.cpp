@@ -32,6 +32,7 @@ int main(int argc, char** argv){
 
   ac.waitForResult();    //wait for the first goal to finish
  
+  //we'll send a goal to the robot to move 1.1 meter upward
   goal2.target_pose.header.frame_id = "base_link";
   goal2.target_pose.header.stamp = ros::Time::now();
 
@@ -41,8 +42,9 @@ int main(int argc, char** argv){
   ROS_INFO("Sending goal2");
   ac.sendGoal(goal2);
 
-  ac.waitForResult();    //wait for the first goal to finish
+  ac.waitForResult();    //wait for the second goal to finish
 
+  //we'll send a goal to the robot to move 1.1 meter to the left
   goal3.target_pose.header.frame_id = "base_link";
   goal3.target_pose.header.stamp = ros::Time::now();
 
@@ -52,8 +54,9 @@ int main(int argc, char** argv){
   ROS_INFO("Sending goal3");
   ac.sendGoal(goal3);
 
-  ac.waitForResult();    //wait for the first goal to finish
+  ac.waitForResult();    //wait for the third goal to finish
 
+  //we'll send a goal to the robot to move back to the origin
   goal4.target_pose.header.frame_id = "base_link";
   goal4.target_pose.header.stamp = ros::Time::now();
 
@@ -63,7 +66,7 @@ int main(int argc, char** argv){
   ROS_INFO("Sending goal4");
   ac.sendGoal(goal4);
 
-  ac.waitForResult();    //wait for the first goal to finish
+  ac.waitForResult();    //wait for the fourth goal to finish
   /*
   if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
     ROS_INFO("Hooray, the base moved 1.1 meter forward");
