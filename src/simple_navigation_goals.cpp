@@ -21,10 +21,11 @@ int main(int argc, char** argv){
   move_base_msgs::MoveBaseGoal goal4;
 
   //we'll send a goal to the robot to move 1 meter forward
-  goal.target_pose.header.frame_id = "base_link";
+  goal.target_pose.header.frame_id = "map";
   goal.target_pose.header.stamp = ros::Time::now();
 
-  goal.target_pose.pose.position.x = 1.1;
+  goal.target_pose.pose.position.x = 1.4;
+  goal.target_pose.pose.position.y = 0.3;
   goal.target_pose.pose.orientation.w = 0.5;
 
   ROS_INFO("Sending goal");
@@ -33,10 +34,11 @@ int main(int argc, char** argv){
   ac.waitForResult();    //wait for the first goal to finish
  
   //we'll send a goal to the robot to move 1.1 meter upward
-  goal2.target_pose.header.frame_id = "base_link";
+  goal2.target_pose.header.frame_id = "map";
   goal2.target_pose.header.stamp = ros::Time::now();
 
-  goal2.target_pose.pose.position.y = 1.1;
+  goal2.target_pose.pose.position.x = 1.4;
+  goal2.target_pose.pose.position.y = 1.4;
   goal2.target_pose.pose.orientation.w = 0.5;
 
   ROS_INFO("Sending goal2");
@@ -45,10 +47,11 @@ int main(int argc, char** argv){
   ac.waitForResult();    //wait for the second goal to finish
 
   //we'll send a goal to the robot to move 1.1 meter to the left
-  goal3.target_pose.header.frame_id = "base_link";
+  goal3.target_pose.header.frame_id = "map";
   goal3.target_pose.header.stamp = ros::Time::now();
 
-  goal3.target_pose.pose.position.x = -1.1;
+  goal3.target_pose.pose.position.x = 0.3;
+  goal3.target_pose.pose.position.y = 1.4;
   goal3.target_pose.pose.orientation.w = 0.5;
 
   ROS_INFO("Sending goal3");
@@ -57,10 +60,11 @@ int main(int argc, char** argv){
   ac.waitForResult();    //wait for the third goal to finish
 
   //we'll send a goal to the robot to move back to the origin
-  goal4.target_pose.header.frame_id = "base_link";
+  goal4.target_pose.header.frame_id = "map";
   goal4.target_pose.header.stamp = ros::Time::now();
 
-  goal4.target_pose.pose.position.y = -1.1;
+  goal4.target_pose.pose.position.x = 0.3;
+  goal4.target_pose.pose.position.y = 0.3;
   goal4.target_pose.pose.orientation.w = 0.5;
 
   ROS_INFO("Sending goal4");
