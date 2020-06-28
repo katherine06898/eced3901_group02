@@ -40,10 +40,10 @@
       <pose frame=''>0 0 0 0 -0 0</pose>
       <link name='obstacle'>
         <collision name='Mountain1'>
-          <pose>3.85 0.6 0.25 0 0 0</pose>
+          <pose>3.66 0.6 0.25 0 0 0</pose>
           <geometry>
             <box>
-              <size>1.22 1.22 1</size>
+              <size>1.22 1.22 0.5</size>
             </box>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -59,10 +59,10 @@
         </collision>
 
         <visual name='Mountain_1'>
-          <pose>3.85 0.6 0.25 0 0 0</pose>
+          <pose>3.66 0.6 0.25 0 0 0</pose>
           <geometry>
             <box>
-              <size>1.22 1.22 1</size>
+              <size>1.22 1.22 0.5</size>
             </box>
           </geometry>
           <material>
@@ -74,12 +74,11 @@
         </visual>
 
         <collision name='Mountain2'>
-          <pose>0.3 0.9 0.25 0 0 0</pose>
+          <pose>0.6 3.35 0.25 0 0 0</pose>
           <geometry>
-            <cylinder>
-              <radius>0.15</radius>
-              <length>0.5</length>
-            </cylinder>
+            <box>
+              <size>1.22 1.83 0.5</size>
+            </box>
           </geometry>
           <max_contacts>10</max_contacts>
           <surface>
@@ -94,17 +93,16 @@
         </collision>
 
         <visual name='Mountain2'>
-          <pose>0.3 0.9 0.25 0 0 0</pose>
+          <pose>0.6 3.35 0.25 0 0 0</pose>
           <geometry>
-            <cylinder>
-              <radius>0.15</radius>
-              <length>0.5</length>
-            </cylinder>
+            <box>
+              <size>1.22 1.83 0.5</size>
+            </box>
           </geometry>
           <material>
             <script>
               <uri>file://media/materials/scripts/gazebo.material</uri>
-              <name>Gazebo/DarkYellow</name>
+              <name>Gazebo/Red</name>
             </script>
           </material>
         </visual>
