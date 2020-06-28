@@ -39,13 +39,12 @@
     <model name='Mountain1'>
       <pose frame=''>0 0 0 0 -0 0</pose>
       <link name='obstacle'>
-        <collision name='obstacle_1'>
-          <pose>0.9 0.9 0.25 0 0 0</pose>
+        <collision name='Mountain1'>
+          <pose>3.85 0.6 0.25 0 0 0</pose>
           <geometry>
-            <cylinder>
-              <radius>0.15</radius>
-              <length>0.5</length>
-            </cylinder>
+            <box>
+              <size>1.22 1.22 1</size>
+            </box>
           </geometry>
           <max_contacts>10</max_contacts>
           <surface>
@@ -60,12 +59,11 @@
         </collision>
 
         <visual name='Mountain_1'>
-          <pose>0.9 0.9 0.25 0 0 0</pose>
+          <pose>3.85 0.6 0.25 0 0 0</pose>
           <geometry>
-            <cylinder>
-              <radius>0.15</radius>
-              <length>0.5</length>
-            </cylinder>
+            <box>
+              <size>1.22 1.22 1</size>
+            </box>
           </geometry>
           <material>
             <script>
