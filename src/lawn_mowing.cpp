@@ -5,7 +5,7 @@
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
 int main(int argc, char** argv){
-  ros::init(argc, argv, "simple_navigation_goals");
+  ros::init(argc, argv, "lawn_mowing");
 
   //tell the action client that we want to spin a thread by default
   MoveBaseClient ac("move_base", true);
@@ -27,7 +27,7 @@ int main(int argc, char** argv){
   goal.target_pose.header.stamp = ros::Time::now();
 
   goal.target_pose.pose.position.x = 0.3048;
-  goal.target_pose.pose.position.y = 1.2192;
+  goal.target_pose.pose.position.y = 1.524;
   goal.target_pose.pose.orientation.w = 0.5;
 
   ROS_INFO("Sending goal");
@@ -39,8 +39,8 @@ int main(int argc, char** argv){
   goal2.target_pose.header.frame_id = "map";
   goal2.target_pose.header.stamp = ros::Time::now();
 
-  goal2.target_pose.pose.position.x = 0.6096;
-  goal2.target_pose.pose.position.y = 1.2192;
+  goal2.target_pose.pose.position.x = 0.9144;
+  goal2.target_pose.pose.position.y = 1.524;
   goal2.target_pose.pose.orientation.w = 0.5;
 
   ROS_INFO("Sending goal2");
@@ -52,7 +52,7 @@ int main(int argc, char** argv){
   goal3.target_pose.header.frame_id = "map";
   goal3.target_pose.header.stamp = ros::Time::now();
 
-  goal3.target_pose.pose.position.x = 0.6096;
+  goal3.target_pose.pose.position.x = 0.9144;
   goal3.target_pose.pose.position.y = 0.3048;
   goal3.target_pose.pose.orientation.w = 0.5;
 
@@ -65,7 +65,7 @@ int main(int argc, char** argv){
   goal4.target_pose.header.frame_id = "map";
   goal4.target_pose.header.stamp = ros::Time::now();
 
-  goal4.target_pose.pose.position.x = 1.2192;
+  goal4.target_pose.pose.position.x = 1.524;
   goal4.target_pose.pose.position.y = 0.3048;
   goal4.target_pose.pose.orientation.w = 0.5;
 
@@ -77,11 +77,11 @@ int main(int argc, char** argv){
   goal5.target_pose.header.frame_id = "map";
   goal5.target_pose.header.stamp = ros::Time::now();
 
-  goal5.target_pose.pose.position.x = 1.2192;
-  goal5.target_pose.pose.position.y = 3.6576;
+  goal5.target_pose.pose.position.x = 1.524;
+  goal5.target_pose.pose.position.y = 3.9624;
   goal5.target_pose.pose.orientation.w = 0.5;
 
-  ROS_INFO("Sending goal4");
+  ROS_INFO("Sending goal5");
   ac.sendGoal(goal5);
 
   ac.waitForResult();    //wait for the fourth goal to finish
