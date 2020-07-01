@@ -208,5 +208,5 @@ include_directories(
 # catkin_add_nosetests(test)
 
 ## Add executable for navigation
-add_executable(eced3901_group02 src/simple_navigation_goals.cpp)
+add_executable(eced3901_group02 src/lawn_mowing.cpp)
 target_link_libraries(eced3901_group02 ${catkin_LIBRARIES})
