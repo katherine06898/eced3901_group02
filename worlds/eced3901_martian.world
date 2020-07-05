@@ -106,9 +106,9 @@
             </script>
           </material>
         </visual>
-<!--
-        <collision name='obstacle_3'>
-          <pose>0.6 -0.6 0.25 0 0 0</pose>
+
+        <collision name='martian1'>
+          <pose>0.9144 1.524 0.25 0 0 0</pose>
           <geometry>
             <cylinder>
               <radius>0.15</radius>
@@ -126,9 +126,9 @@
             </contact>
           </surface>
         </collision>
-
-        <visual name='obstacle_3'>
-          <pose>0.6 -0.6 0.25 0 0 0</pose>
+<!--
+        <visual name='martian1'>
+          <pose>0.9144 1.524 0.25 0 0 0</pose>
           <geometry>
             <cylinder>
               <radius>0.15</radius>
@@ -143,8 +143,8 @@
           </material>
         </visual>
 
-        <collision name='obstacle_4'>
-          <pose>0.6 0.6 0.25 0 0 0</pose>
+        <collision name='martian2'>
+          <pose>3.8624 1.8624 0.25 0 0 0</pose>
           <geometry>
             <cylinder>
               <radius>0.15</radius>
@@ -163,8 +163,8 @@
           </surface>
         </collision>
 
-        <visual name='obstacle_4'>
-          <pose>0.6 0.6 0.25 0 0 0</pose>
+        <visual name='martian2'>
+          <pose>3.8624 1.8624 0.25 0 0 0</pose>
           <geometry>
             <cylinder>
               <radius>0.15</radius>
