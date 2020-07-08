@@ -106,7 +106,7 @@
             </script>
           </material>
         </visual>
-
+<!--
         <collision name='martian1'>
           <pose>0.9144 1.524 0.25 0 0 0</pose>
           <geometry>
@@ -126,7 +126,7 @@
             </contact>
           </surface>
         </collision>
-<!--
+
         <visual name='martian1'>
           <pose>0.9144 1.524 0.25 0 0 0</pose>
           <geometry>
