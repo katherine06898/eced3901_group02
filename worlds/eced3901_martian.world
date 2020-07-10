@@ -30,8 +30,8 @@
         </constraints>
       </ode>
     </physics>
-
-    <!-- Load model -->
+<!--
+    
     <include>
       <uri>model://eced3901_martian</uri>
     </include>
@@ -106,7 +106,7 @@
             </script>
           </material>
         </visual>
-<!--
+
         <collision name='martian1'>
           <pose>0.9144 1.524 0.25 0 0 0</pose>
           <geometry>
@@ -178,11 +178,11 @@
             </script>
           </material>
         </visual>
--->
+
       </link>
       <static>1</static>
     </model>
-
+-->
     <scene>
       <ambient>0.4 0.4 0.4 1</ambient>
       <background>0.7 0.7 0.7 1</background>
