@@ -23,11 +23,9 @@
     <node pkg="rviz" type="rviz" name="rviz" required="true"
           args="-d $(find turtlebot3_slam)/rviz/turtlebot3_$(arg slam_methods).rviz"/>
   </group>
-
-  <!-- Slam the environment -->
-  <node name="slam" pkg="eced3901_group02" type="fc.py" args="$(arg mode)/>
-
+  <!-- Slam environment -->
+  <node name="slam" pkg="eced3901_group02" type="fc.py" args="$(arg mode)"/>
+  
   <!-- Saving Map after Mapping the Location -->
   <node name="martian_map" pkg="map_server" type="map_saver" args="-f $(find eced3901_group02)/martian_map" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@' "/>
-
 </launch>

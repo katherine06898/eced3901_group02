@@ -224,17 +224,17 @@ class SquareMoveOdom(SquareMove):
 
         # Implement main instructions
 	# Changed parameters of move_of() and turn_of() to slam
-        self.move_of(0.9144) 
+        self.move_of(1.3716) 
         self.turn_of(math.pi/2)
-        self.move_of(1.8288)
-        self.turn_of(math.pi/2)
-        self.move_of(0.9144)
+        self.move_of(3.6576)
+        self.turn_of(3*math.pi/2)
+        self.move_of(0.9)
         self.turn_of(math.pi)
-        self.move_of(0.9144)
+        self.move_of(0.9)
+        self.turn_of(3*math.pi/2)
+	self.move_of(3.6576)
         self.turn_of(math.pi/2)
-	self.move_of(1.8288)
-        self.turn_of(math.pi/2)
-        self.move_of(0.9144)
+        self.move_of(1.3716)
         self.stop_robot()
 
 
